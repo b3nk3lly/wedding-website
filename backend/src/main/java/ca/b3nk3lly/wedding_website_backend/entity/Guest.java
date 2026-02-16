@@ -3,6 +3,8 @@ package ca.b3nk3lly.wedding_website_backend.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
@@ -18,11 +20,8 @@ public class Guest {
     @SequenceGenerator(name = "guest_id_seq_generator", sequenceName = "guest_id_seq", allocationSize = 1)
     private Integer id;
 
-    @Column(name = "first_name", updatable = false)
-    private String firstName;
-
-    @Column(name = "last_name", updatable = false)
-    private String lastName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "attending")
     private Boolean isAttending;
@@ -33,10 +32,19 @@ public class Guest {
     @Column(name = "allergies")
     private String allergies;
 
-    @Column(name = "user_id", updatable = false)
-    private Integer userId;
+    @ManyToOne
+    @JoinColumn(name = "group_id", updatable = false, nullable = false)
+    private Group group;
 
     @Column(name = "updated_at")
     @LastModifiedDate
     private Instant updatedAt;
+
+    @Column(name = "updated_by")
+    @LastModifiedBy
+    private String updatedBy;
+
+    @Column(name = "created_at")
+    @CreatedDate
+    private Instant createdAt;
 }

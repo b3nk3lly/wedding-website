@@ -17,4 +17,8 @@ public class AuthenticatedUser implements UserDetails {
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
+
+    public boolean isAdmin() {
+        return this.authorities != null && this.authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_" + RoleType.ADMIN));
+    }
 }

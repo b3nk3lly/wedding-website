@@ -1,5 +1,7 @@
 package ca.b3nk3lly.wedding_website_backend.service;
 
+import ca.b3nk3lly.wedding_website_backend.dto.MealCreationUpdateDto;
+import ca.b3nk3lly.wedding_website_backend.dto.MealResponseDto;
 import ca.b3nk3lly.wedding_website_backend.entity.Meal;
 import ca.b3nk3lly.wedding_website_backend.repository.MealRepository;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 class MealServiceTest {
@@ -19,9 +22,6 @@ class MealServiceTest {
 
     @InjectMocks
     private MealService mealService;
-
-    @Captor
-    private ArgumentCaptor<Meal> mealCaptor;
 
     @Test
     void testFindAll() {
@@ -46,17 +46,13 @@ class MealServiceTest {
 
     @Test
     void testSaveOne() {
-        Meal meal = new Meal();
-        meal.setId(1);
-        meal.setName("Meal 1");
-        meal.setDescription("Description 1");
+        MealCreationUpdateDto creationDto = MealCreationUpdateDto.builder().name("My Meal").description("My Description").build();
 
-        mealService.saveOne(meal);
+        MealResponseDto responseDto = mealService.saveOne(creationDto);
 
-        Mockito.verify(mealRepository, Mockito.times(1)).save(mealCaptor.capture());
+        Mockito.verify(mealRepository, Mockito.times(1)).save(any());
 
-        Meal savedMeal = mealCaptor.getValue();
-
-        assertEquals(meal, savedMeal);
+        assertEquals(creationDto.name(), responseDto.name());
+        assertEquals(creationDto.description(), responseDto.description());
     }
 }

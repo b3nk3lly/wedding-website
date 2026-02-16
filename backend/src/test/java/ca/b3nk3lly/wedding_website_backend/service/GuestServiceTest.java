@@ -1,16 +1,23 @@
 package ca.b3nk3lly.wedding_website_backend.service;
 
+import ca.b3nk3lly.wedding_website_backend.annotation.WithMockAuthenticatedUser;
+import ca.b3nk3lly.wedding_website_backend.dto.GuestResponseDto;
 import ca.b3nk3lly.wedding_website_backend.dto.GuestUpdateDto;
+import ca.b3nk3lly.wedding_website_backend.entity.Group;
 import ca.b3nk3lly.wedding_website_backend.entity.Guest;
 import ca.b3nk3lly.wedding_website_backend.repository.GuestRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 class GuestServiceTest {
 
     @Mock
@@ -19,47 +26,34 @@ class GuestServiceTest {
     @InjectMocks
     private GuestService guestService;
 
-    @Captor
-    ArgumentCaptor<Guest> guestCaptor;
-
     @Test
-    void testFindById() {
-        guestService.findById(1);
-        Mockito.verify(guestRepository, Mockito.times(1)).findById(1);
-    }
-
-    @Test
-    void testFindByUserId() {
-        guestService.findByUserId(2);
-        Mockito.verify(guestRepository, Mockito.times(1)).findByUserId(2);
-    }
-
-    @Test
+    @WithMockAuthenticatedUser(userId = 1)
     void testUpdateGuest() {
-        Guest existingGuest = new Guest();
+        Group existingGroup = new Group();
+        existingGroup.setId(1);
+        existingGroup.setUserId(1);
 
+        Guest existingGuest = new Guest();
         existingGuest.setId(1);
-        existingGuest.setFirstName("First name");
-        existingGuest.setLastName("Last name");
-        existingGuest.setLastName("Last name");
+        existingGuest.setName("Name");
         existingGuest.setIsAttending(false);
         existingGuest.setMealId(null);
         existingGuest.setAllergies("None");
+        existingGuest.setGroup(existingGroup);
 
+        Mockito.when(guestRepository.findById(existingGuest.getId())).thenReturn(Optional.of(existingGuest));
         GuestUpdateDto updateDto = GuestUpdateDto.builder().isAttending(true).selectedMealId(1).allergies("Peanuts").build();
 
-        guestService.updateOne(existingGuest, updateDto);
-        Mockito.verify(guestRepository, Mockito.times(1)).save(guestCaptor.capture());
-        Guest updatedGuest = guestCaptor.getValue();
+        GuestResponseDto responseDto = guestService.updateOne(existingGuest.getId(), updateDto);
+        Mockito.verify(guestRepository, Mockito.times(1)).save(any());
 
         // these fields stayed the same
-        assertEquals(existingGuest.getId(), updatedGuest.getId());
-        assertEquals(existingGuest.getFirstName(), updatedGuest.getFirstName());
-        assertEquals(existingGuest.getLastName(), updatedGuest.getLastName());
+        assertEquals(existingGuest.getId(), responseDto.id());
+        assertEquals(existingGuest.getName(), responseDto.name());
 
         // these fields changed
-        assertEquals(existingGuest.getIsAttending(), updateDto.isAttending());
-        assertEquals(existingGuest.getMealId(), updateDto.selectedMealId());
-        assertEquals(existingGuest.getAllergies(), updateDto.allergies());
+        assertEquals(updateDto.isAttending(), responseDto.isAttending());
+        assertEquals(updateDto.selectedMealId(), responseDto.selectedMealId());
+        assertEquals(updateDto.allergies(), responseDto.allergies());
     }
 }

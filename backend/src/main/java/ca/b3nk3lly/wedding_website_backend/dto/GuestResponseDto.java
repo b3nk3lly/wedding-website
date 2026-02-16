@@ -5,8 +5,7 @@ import lombok.Builder;
 @Builder
 public record GuestResponseDto(
         Integer id,
-        String firstName,
-        String lastName,
+        String name,
         Boolean isAttending,
         Integer selectedMealId,
         String allergies) {

@@ -9,8 +9,7 @@ public class GuestResponseDtoConverter {
         return GuestResponseDto
                 .builder()
                 .id(guest.getId())
-                .firstName(guest.getFirstName())
-                .lastName(guest.getLastName())
+                .name(guest.getName())
                 .isAttending(guest.getIsAttending())
                 .selectedMealId(guest.getMealId())
                 .allergies(guest.getAllergies())
