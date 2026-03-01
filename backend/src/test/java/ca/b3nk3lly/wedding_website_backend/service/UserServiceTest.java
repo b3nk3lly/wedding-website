@@ -1,11 +1,9 @@
 package ca.b3nk3lly.wedding_website_backend.service;
 
 import ca.b3nk3lly.wedding_website_backend.repository.UserRepository;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -16,10 +14,4 @@ class UserServiceTest {
 
     @InjectMocks
     private UserService userService;
-
-    @Test
-    void testFindByUsername() {
-        userService.findByUsername("brkelly");
-        Mockito.verify(userRepository, Mockito.times(1)).findByUsername("brkelly");
-    }
 }

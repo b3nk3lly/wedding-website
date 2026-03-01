@@ -5,5 +5,5 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record GroupResponseDto(Integer id, String name, List<GuestResponseDto> members) {
+public record GroupResponseDto(Integer id, String name, UserResponseDto user, List<GuestResponseDto> members) {
 }

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "groups")
@@ -13,16 +14,17 @@ import java.util.List;
 public class Group {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "guest_id_seq_generator")
-    @SequenceGenerator(name = "guest_id_seq_generator", sequenceName = "guest_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "group_id_seq_generator")
+    @SequenceGenerator(name = "group_id_seq_generator", sequenceName = "group_id_seq", allocationSize = 1)
     private Integer id;
 
-    @Column(name = "user_id", updatable = false)
-    private Integer userId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", updatable = false)
+    private User user;
 
     @Column(name = "name")
     private String name;
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private List<Guest> members;
+    private List<Guest> members = new ArrayList<>();
 }

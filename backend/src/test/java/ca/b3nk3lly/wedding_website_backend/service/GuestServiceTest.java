@@ -31,7 +31,7 @@ class GuestServiceTest {
     void testUpdateGuest() {
         Group existingGroup = new Group();
         existingGroup.setId(1);
-        existingGroup.setUserId(1);
+        existingGroup.setUser(1);
 
         Guest existingGuest = new Guest();
         existingGuest.setId(1);

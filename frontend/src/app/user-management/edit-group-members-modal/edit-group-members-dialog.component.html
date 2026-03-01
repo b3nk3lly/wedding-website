@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Edit {{ data.group.name }}</h2>
+<mat-dialog-content [formArray]="form">
+
+  @for (member of form.controls; track $index; let i = $index) {
+    <mat-form-field>
+      <mat-label>Group Name</mat-label>
+      <input matInput formControlName="i">
+    </mat-form-field>
+    <button matButton (click)="removeMember(i)">Remove</button>
+  }
+
+  <button matButton (click)="addMember()">Add</button>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>Cancel</button>
+  <button matButton [disabled]="form.invalid">Save</button>
+</mat-dialog-actions>

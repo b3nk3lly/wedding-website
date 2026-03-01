@@ -12,7 +12,7 @@ public class SecurityUtils {
 
     public static boolean canUserAccessGroup(Group group) {
         AuthenticatedUser user = getAuthenticatedUser();
-        return user != null && (user.isAdmin() || Objects.equals(user.getId(), group.getUserId()));
+        return user != null && (user.isAdmin() || Objects.equals(user.getId(), group.getUser().getId()));
     }
 
     private static AuthenticatedUser getAuthenticatedUser() {

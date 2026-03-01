@@ -10,6 +10,7 @@ public class GroupResponseDtoConverter {
                 .builder()
                 .id(group.getId())
                 .name(group.getName())
+                .user(UserResponseDtoConverter.toDto(group.getUser()))
                 .members(group.getMembers().stream().map(GuestResponseDtoConverter::toDto).toList())
                 .build();
     }

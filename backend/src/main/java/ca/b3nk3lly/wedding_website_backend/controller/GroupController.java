@@ -1,11 +1,9 @@
 package ca.b3nk3lly.wedding_website_backend.controller;
 
+import ca.b3nk3lly.wedding_website_backend.dto.GroupCreationDto;
 import ca.b3nk3lly.wedding_website_backend.dto.GroupResponseDto;
 import ca.b3nk3lly.wedding_website_backend.service.GroupService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +25,10 @@ public class GroupController {
     @GetMapping
     public List<GroupResponseDto> findAllGroups() {
         return groupService.findAll();
+    }
+
+    @PostMapping
+    public GroupResponseDto createGroup(@RequestBody GroupCreationDto dto) {
+        return this.groupService.createOne(dto);
     }
 }
