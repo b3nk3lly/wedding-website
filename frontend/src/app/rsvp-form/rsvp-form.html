@@ -1,0 +1,88 @@
+<form [formArray]="form">
+  <ol>
+    @for (guest of form.controls; track $index; let i = $index) {
+      <li [formGroupName]="i">
+        <div class="form-group">
+          <div>
+            <p>Will {{ group().members[i].name }} be attending?</p>
+
+            @if (submitted() && guest.controls.isAttending.invalid) {
+              <p class="error-message">Please select an option.</p>
+            }
+
+            <mat-button-toggle-group required matInput formControlName="isAttending">
+              <mat-button-toggle [value]="AttendanceSelection.YES"
+                >Yes, they will be attending!</mat-button-toggle
+              >
+              <mat-button-toggle [value]="AttendanceSelection.MAYBE">
+                We're not sure.</mat-button-toggle
+              >
+              <mat-button-toggle [value]="AttendanceSelection.NO"
+                >No, they can't make it.</mat-button-toggle
+              >
+            </mat-button-toggle-group>
+          </div>
+
+          @if (
+            !!guest.controls.isAttending.value &&
+            guest.controls.isAttending.value !== AttendanceSelection.NO
+          ) {
+            @if (guest.controls.isAttending.value === AttendanceSelection.MAYBE) {
+              <p>
+                If {{ group().members[i].name }} is undecided, no worries! If you know their
+                preferences, please enter them below.
+              </p>
+            }
+
+            <mat-divider></mat-divider>
+
+            <div>
+              <p>What would {{ group().members[i].name }} like to eat?</p>
+
+              @if (submitted() && guest.controls.mealId.invalid) {
+                <p class="error-message">Please choose a meal.</p>
+              }
+
+              <mat-radio-group formControlName="mealId" class="flex-col">
+                <mat-radio-button [value]="0">Chicken Alfredo</mat-radio-button>
+                <mat-radio-button [value]="1">Burrito Bowls</mat-radio-button>
+                <mat-radio-button [value]="2">Commercial St Deli</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div>
+              <p>Does {{ group().members[i].name }} have any allergies?</p>
+
+              @if (submitted() && guest.controls.hasAllergies.invalid) {
+                <p class="error-message">Please select an option.</p>
+              }
+
+              <mat-button-toggle-group formControlName="hasAllergies">
+                <mat-button-toggle [value]="true">Yes</mat-button-toggle>
+                <mat-button-toggle [value]="false">No</mat-button-toggle>
+              </mat-button-toggle-group>
+            </div>
+
+            @if (guest.controls.hasAllergies.value) {
+              <div>
+                <p>Please specify {{ group().members[i].name }}'s allergies:</p>
+                @if (submitted() && guest.controls.allergies.invalid) {
+                  <p class="error-message">This field is required.</p>
+                }
+                <mat-form-field>
+                  <textarea required matInput formControlName="allergies"></textarea>
+                </mat-form-field>
+              </div>
+            }
+          }
+
+          <mat-divider></mat-divider>
+        </div>
+      </li>
+    }
+  </ol>
+
+  <button matButton (click)="submit()" [disabled]="submitted() && form.invalid">Save</button>
+</form>
