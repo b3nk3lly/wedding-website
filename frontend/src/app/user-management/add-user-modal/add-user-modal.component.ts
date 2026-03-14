@@ -1,13 +1,11 @@
-import {Component} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'add-user-modal',
   templateUrl: './add-user-modal.component.html',
-  imports: [
-    ReactiveFormsModule
-  ],
-  styleUrls: ['./add-user-modal.component.scss']
+  imports: [ReactiveFormsModule],
+  styleUrls: ['./add-user-modal.component.scss'],
 })
 export class AddUserModalComponent {
   protected form: FormGroup;
@@ -17,7 +15,7 @@ export class AddUserModalComponent {
       name: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', Validators.required],
-      guests: this.fb.array<string>([])
+      guests: this.fb.array<string>([]),
     });
   }
 

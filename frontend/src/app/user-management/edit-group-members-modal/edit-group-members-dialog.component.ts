@@ -1,16 +1,17 @@
-import {Component, inject} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {GroupResponseDto, GroupService} from '../../services/group.service';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatButton} from '@angular/material/button';
+import { Component, inject } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { GroupResponseDto, GroupService } from '../../services/group.service';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
-  MatDialogActions, MatDialogClose,
+  MatDialogActions,
+  MatDialogClose,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle
+  MatDialogTitle,
 } from '@angular/material/dialog';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 
 @Component({
   selector: 'edit-group-members-dialog',
@@ -24,15 +25,18 @@ import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose
+    MatDialogClose,
   ],
   providers: [
-    {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {hideRequiredMarker: true, appearance: 'outline', floatLabel: 'never'}}
-  ]
+    {
+      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+      useValue: { hideRequiredMarker: true, appearance: 'outline', floatLabel: 'never' },
+    },
+  ],
 })
 export class EditGroupMembersDialogComponent {
   protected form: FormArray;
-  protected data: {group: GroupResponseDto} = inject(MAT_DIALOG_DATA)
+  protected data: { group: GroupResponseDto } = inject(MAT_DIALOG_DATA);
 
   private dialogRef: MatDialogRef<EditGroupMembersDialogComponent> = inject(MatDialogRef);
 
@@ -41,7 +45,7 @@ export class EditGroupMembersDialogComponent {
   }
 
   protected addMember() {
-    this.form.push(this.fb.control(''))
+    this.form.push(this.fb.control(''));
   }
 
   protected removeMember(index: number) {

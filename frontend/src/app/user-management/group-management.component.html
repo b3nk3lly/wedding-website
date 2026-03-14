@@ -4,7 +4,7 @@
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{group.name}}
+          {{ group.name }}
         </mat-panel-title>
         <mat-panel-description>
           <div>
@@ -14,11 +14,10 @@
           <button matButton (click)="showEditGroupMembersModal(group)">Add Group Member</button>
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <div>Username: {{group.user.username}}</div>
+      <div>Username: {{ group.user.username }}</div>
       @if (group.members.length === 0) {
         There are no people in this group.
       }
     </mat-expansion-panel>
   }
 </mat-accordion>
-

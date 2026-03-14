@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 export interface GuestResponseDto {
   name: string;
@@ -26,17 +26,15 @@ export interface GroupCreationDto {
   password: string;
 }
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class GroupService {
-  constructor(private httpClient: HttpClient) {
-
-  }
+  constructor(private httpClient: HttpClient) {}
 
   public getAllGroups(): Observable<GroupResponseDto[]> {
-    return this.httpClient.get<GroupResponseDto[]>(`/groups`)
+    return this.httpClient.get<GroupResponseDto[]>(`/groups`);
   }
 
   public createGroup(creationDto: GroupCreationDto) {
-    return this.httpClient.post<GroupResponseDto>(`/groups`, creationDto)
+    return this.httpClient.post<GroupResponseDto>(`/groups`, creationDto);
   }
 }

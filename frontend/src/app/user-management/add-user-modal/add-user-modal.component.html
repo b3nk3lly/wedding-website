@@ -1,17 +1,17 @@
 <form [formGroup]="form">
   <div>
     <label for="name">Group Name:</label>
-    <input formControlName="name">
+    <input formControlName="name" />
   </div>
 
   <div>
     <label for="name">Username:</label>
-    <input formControlName="name">
+    <input formControlName="name" />
   </div>
 
   <div>
     <label for="name">Password:</label>
-    <input formControlName="name">
+    <input formControlName="name" />
   </div>
 
   <div>
@@ -20,7 +20,7 @@
       @for (member of guests.controls; track $index; let i = $index) {
         <div>
           <label for="guestName">Name:</label>
-          <input [formControlName]="i">
+          <input [formControlName]="i" />
         </div>
       }
     </div>
