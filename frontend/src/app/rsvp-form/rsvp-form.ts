@@ -6,12 +6,10 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { AttendanceSelection, Group, Guest } from '../../models/guest.model';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
 import {
   MatError,
-  MatFormField,
   MatInput,
   MatInputModule,
   MatLabel,
@@ -20,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import {Group, Guest, AttendanceSelection} from '../models/guest.model';
 
 @Component({
   selector: 'app-rsvp-form',

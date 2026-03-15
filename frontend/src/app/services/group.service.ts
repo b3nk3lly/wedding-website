@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -28,7 +28,7 @@ export interface GroupCreationDto {
 
 @Injectable({ providedIn: 'root' })
 export class GroupService {
-  constructor(private httpClient: HttpClient) {}
+  private readonly httpClient = inject(HttpClient);
 
   public getAllGroups(): Observable<GroupResponseDto[]> {
     return this.httpClient.get<GroupResponseDto[]>(`/groups`);

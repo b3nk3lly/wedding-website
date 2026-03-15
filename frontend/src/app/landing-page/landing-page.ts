@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
-import { Group } from '../../models/guest.model';
 import { MatButtonModule } from '@angular/material/button';
 import { RsvpForm } from '../rsvp-form/rsvp-form';
+import {Group} from '../models/guest.model';
 
 const testGroup: Group = {
   name: 'Test Group',
