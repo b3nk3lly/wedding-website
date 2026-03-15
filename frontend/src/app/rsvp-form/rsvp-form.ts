@@ -19,6 +19,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import {Group, Guest, AttendanceSelection} from '../models/guest.model';
+import {GroupResponseDto, GuestResponseDto} from '../services/group.service';
 
 @Component({
   selector: 'app-rsvp-form',
@@ -38,7 +39,7 @@ import {Group, Guest, AttendanceSelection} from '../models/guest.model';
   styleUrl: './rsvp-form.scss',
 })
 export class RsvpForm implements OnInit {
-  public group = input.required<Group>();
+  public group = input.required<GroupResponseDto>();
 
   private fb = inject(FormBuilder);
 
@@ -68,7 +69,7 @@ export class RsvpForm implements OnInit {
     this.submitted.set(true);
   }
 
-  private createNewGuestForm(guest: Guest): FormGroup {
+  private createNewGuestForm(guest: GuestResponseDto): FormGroup {
     const guestForm = this.fb.group({
       isAttending: [guest.isAttending, Validators.required],
       mealId: this.fb.control(guest.selectedMealId ?? null),

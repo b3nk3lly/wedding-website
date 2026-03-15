@@ -15,17 +15,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GuestService {
+public class ReservationService {
 
     private final GuestRepository guestRepository;
     private final GroupRepository groupRepository;
 
-    public GuestService(GuestRepository guestRepository, GroupRepository groupRepository) {
+    public ReservationService(GuestRepository guestRepository, GroupRepository groupRepository) {
         this.guestRepository = guestRepository;
         this.groupRepository = groupRepository;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     public GuestResponseDto createOne(GuestCreationDto dto) {
         Group group = groupRepository.getReferenceById(dto.groupId());
 
@@ -36,17 +35,15 @@ public class GuestService {
         return GuestResponseDtoConverter.toDto(guestRepository.save(guest));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    public GuestResponseDto updateOne(Integer guestId, String name) {
+    public GuestResponseDto updateOne(Integer guestId, ReservationUpdateDto updateDto) {
         Guest guest = guestRepository.findById(guestId).orElseThrow(() -> new EntityNotFoundException("Couldn't find guest with ID " + guestId));
 
-        guest.setName(name);
+        if (!SecurityUtils.canUserAccessGroup(guest.getGroup())) {
+            throw new AccessDeniedException("Current user cannot access the group");
+        }
+
+        guest.setName(updateDto.name());
 
         return GuestResponseDtoConverter.toDto(guestRepository.save(guest));
-    }
-
-    @PreAuthorize("hasRole('ADMIN')")
-    public void deleteOne(Integer guestId) {
-        guestRepository.deleteById(guestId);
     }
 }

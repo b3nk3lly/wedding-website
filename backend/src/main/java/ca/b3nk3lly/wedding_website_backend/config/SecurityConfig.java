@@ -3,6 +3,7 @@ package ca.b3nk3lly.wedding_website_backend.config;
 import ca.b3nk3lly.wedding_website_backend.filter.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;

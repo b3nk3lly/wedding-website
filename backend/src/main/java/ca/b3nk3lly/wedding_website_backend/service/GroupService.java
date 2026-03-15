@@ -3,6 +3,7 @@ package ca.b3nk3lly.wedding_website_backend.service;
 import ca.b3nk3lly.wedding_website_backend.converter.GroupResponseDtoConverter;
 import ca.b3nk3lly.wedding_website_backend.dto.GroupCreationDto;
 import ca.b3nk3lly.wedding_website_backend.dto.GroupResponseDto;
+import ca.b3nk3lly.wedding_website_backend.dto.GroupUpdateDto;
 import ca.b3nk3lly.wedding_website_backend.entity.Group;
 import ca.b3nk3lly.wedding_website_backend.entity.User;
 import ca.b3nk3lly.wedding_website_backend.repository.GroupRepository;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -51,6 +53,16 @@ public class GroupService {
 
         Group group = new Group();
         group.setUser(user);
+        group.setName(dto.name());
+
+        return GroupResponseDtoConverter.toDto(groupRepository.save(group));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    public GroupResponseDto updateOne(Integer groupId, GroupUpdateDto dto) {
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new EntityNotFoundException("Couldn't find group with ID " + groupId));
+
+        group.getUser().setUsername(dto.username());
         group.setName(dto.name());
 
         return GroupResponseDtoConverter.toDto(groupRepository.save(group));

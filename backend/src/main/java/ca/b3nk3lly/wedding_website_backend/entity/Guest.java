@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 
@@ -13,6 +14,7 @@ import java.time.Instant;
 @Entity
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class Guest {
 
     @Id
@@ -23,14 +25,9 @@ public class Guest {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "attending")
-    private Boolean isAttending;
-
-    @Column(name = "mealId")
-    private Integer mealId;
-
-    @Column(name = "allergies")
-    private String allergies;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "reservation_id", updatable = false)
+    private Reservation reservation;
 
     @ManyToOne
     @JoinColumn(name = "group_id", updatable = false, nullable = false)

@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, resource, signal } from '@angular/core';
+import {Component, computed, inject, OnInit, resource, signal} from '@angular/core';
 import { AddGroupDialogComponent } from './add-group-modal/add-group-dialog.component';
-import { GroupResponseDto, GroupService } from '../services/group.service';
+import {GroupResponseDto, GroupService, GuestResponseDto} from '../services/group.service';
 import { MatIcon } from '@angular/material/icon';
 import {
   MatAccordion,
@@ -12,7 +12,9 @@ import {
 } from '@angular/material/expansion';
 import { MatButton } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { EditGroupMembersDialogComponent } from './edit-group-members-modal/edit-group-members-dialog.component';
+import { GroupMemberDialogComponent } from './edit-group-members-modal/group-member-dialog.component';
+import {GuestService} from '../services/guest.service';
+import {RemoveMemberDialogComponent} from './delete-group-member-modal/remove-member-dialog.component';
 
 @Component({
   selector: 'user-management',
@@ -25,15 +27,15 @@ import { EditGroupMembersDialogComponent } from './edit-group-members-modal/edit
     MatExpansionPanelDescription,
     MatAccordion,
     MatButton,
-    MatExpansionPanelActionRow,
   ],
   styleUrls: ['./group-management.component.scss'],
 })
 export class GroupManagementComponent implements OnInit {
-  protected groups = signal<GroupResponseDto[]>([]);
+  protected readonly groups = signal<GroupResponseDto[]>([]);
+  protected readonly totalPeople = computed(() => this.groups().reduce((total, group) => total + group.members.length, 0));
 
-  private groupService = inject(GroupService);
-  private dialog = inject(MatDialog);
+  private readonly groupService = inject(GroupService);
+  private readonly dialog = inject(MatDialog);
 
   public ngOnInit() {
     this.fetchGroups();
@@ -47,8 +49,22 @@ export class GroupManagementComponent implements OnInit {
     });
   }
 
-  protected showEditGroupMembersModal(group: GroupResponseDto) {
-    const dialogRef = this.dialog.open(EditGroupMembersDialogComponent, { data: { group } });
+  protected showAddGroupMemberModal(group: GroupResponseDto) {
+    const dialogRef = this.dialog.open(GroupMemberDialogComponent, { data: { group }});
+    dialogRef.afterClosed().subscribe((result) => {
+      this.fetchGroups();
+    });
+  }
+
+  protected showDeleteGroupMemberModal(group: GroupResponseDto, guest: GuestResponseDto) {
+    const dialogRef = this.dialog.open(RemoveMemberDialogComponent, { data: { group, guest }});
+    dialogRef.afterClosed().subscribe((result) => {
+      this.fetchGroups();
+    });
+  }
+
+  protected showEditGroupMemberModal(group: GroupResponseDto, guest: GuestResponseDto) {
+    const dialogRef = this.dialog.open(GroupMemberDialogComponent, { data: { group, guest } });
   }
 
   private fetchGroups() {

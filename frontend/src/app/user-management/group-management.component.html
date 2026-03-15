@@ -1,4 +1,9 @@
-<button matButton (click)="showAddGroupModal()">Add Group</button>
+<h1>Group Management</h1>
+<div>
+  Total groups: {{ groups().length }}
+  Total people: {{ totalPeople() }}
+  <button matButton (click)="showAddGroupModal()">Add Group</button>
+</div>
 <mat-accordion multi>
   @for (group of groups(); track group.id) {
     <mat-expansion-panel>
@@ -11,12 +16,21 @@
             <mat-icon fontIcon="people"></mat-icon>
             <span>{{ group.members.length }}</span>
           </div>
-          <button matButton (click)="showEditGroupMembersModal(group)">Add Group Member</button>
+          <button matButton (click)="showAddGroupMemberModal(group)">Add Group Member</button>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div>Username: {{ group.user.username }}</div>
       @if (group.members.length === 0) {
         There are no people in this group.
+      } @else {
+        <ol>
+          @for (member of group.members; track member.id) {
+            <li>
+              {{ member.name }}
+              <button matButton (click)="showDeleteGroupMemberModal(group, member)">Delete</button>
+            </li>
+          }
+        </ol>
       }
     </mat-expansion-panel>
   }

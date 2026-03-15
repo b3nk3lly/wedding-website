@@ -10,9 +10,6 @@ public class GuestResponseDtoConverter {
                 .builder()
                 .id(guest.getId())
                 .name(guest.getName())
-                .isAttending(guest.getIsAttending())
-                .selectedMealId(guest.getMealId())
-                .allergies(guest.getAllergies())
                 .build();
     }
 }

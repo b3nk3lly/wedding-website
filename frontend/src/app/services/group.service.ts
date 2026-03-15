@@ -1,11 +1,14 @@
 import {inject, Injectable} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {AttendanceSelection} from '../models/guest.model';
 
 export interface GuestResponseDto {
+  id: number;
   name: string;
-  isAttending?: boolean;
+  isAttending?: AttendanceSelection;
   selectedMealId?: string;
+  hasAllergies?: boolean;
   allergies?: string;
 }
 
@@ -36,5 +39,9 @@ export class GroupService {
 
   public createGroup(creationDto: GroupCreationDto) {
     return this.httpClient.post<GroupResponseDto>(`/groups`, creationDto);
+  }
+
+  public getCurrentUserGroup() {
+    return this.httpClient.get<GroupResponseDto>(`/groups/mine`);
   }
 }

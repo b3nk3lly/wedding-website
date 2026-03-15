@@ -3,5 +3,5 @@ package ca.b3nk3lly.wedding_website_backend.dto;
 import lombok.Builder;
 
 @Builder
-public record GuestCreationDto(Integer groupId, String name) {
+public record GroupUpdateDto(String username, String name) {
 }

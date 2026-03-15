@@ -4,7 +4,7 @@
       <li [formGroupName]="i">
         <div class="form-group">
           <div>
-            <p>Will {{ group().members[i].name }} be attending?</p>
+            <p>Will <strong>{{ group().members[i].name }}</strong> be attending?</p>
 
             @if (submitted() && guest.controls.isAttending.invalid) {
               <p class="error-message">Please select an option.</p>

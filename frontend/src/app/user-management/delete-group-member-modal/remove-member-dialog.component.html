@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Remove Group Member</h2>
+<mat-dialog-content>
+  Are you sure you want to remove <strong>{{ data.guest.name }}</strong> from <strong>{{ data.group.name }}</strong>? This will delete their reservation, if it exists.
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>Cancel</button>
+  <button matButton [disabled]="form.invalid" (click)="removeGuest()">Yes</button>
+</mat-dialog-actions>

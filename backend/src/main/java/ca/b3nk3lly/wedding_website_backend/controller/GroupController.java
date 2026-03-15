@@ -1,8 +1,11 @@
 package ca.b3nk3lly.wedding_website_backend.controller;
 
+import ca.b3nk3lly.wedding_website_backend.domain.AuthenticatedUser;
 import ca.b3nk3lly.wedding_website_backend.dto.GroupCreationDto;
 import ca.b3nk3lly.wedding_website_backend.dto.GroupResponseDto;
+import ca.b3nk3lly.wedding_website_backend.dto.GroupUpdateDto;
 import ca.b3nk3lly.wedding_website_backend.service.GroupService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +18,11 @@ public class GroupController {
 
     public GroupController(GroupService groupService) {
         this.groupService = groupService;
+    }
+
+    @GetMapping("/mine")
+    public GroupResponseDto findMyGroup(@AuthenticationPrincipal AuthenticatedUser principal) {
+        return groupService.findByUserId(principal.getId());
     }
 
     @GetMapping(params = "userId")
@@ -30,5 +38,10 @@ public class GroupController {
     @PostMapping
     public GroupResponseDto createGroup(@RequestBody GroupCreationDto dto) {
         return this.groupService.createOne(dto);
+    }
+
+    @PutMapping("/{groupId}")
+    public GroupResponseDto updateGroup(@PathVariable int groupId, @RequestBody GroupUpdateDto dto) {
+        return groupService.updateOne(groupId, dto);
     }
 }

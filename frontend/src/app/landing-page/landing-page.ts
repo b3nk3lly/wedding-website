@@ -1,19 +1,9 @@
-import { Component, signal } from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RsvpForm } from '../rsvp-form/rsvp-form';
-import {Group} from '../models/guest.model';
-
-const testGroup: Group = {
-  name: 'Test Group',
-  members: [
-    {
-      name: 'Guest 1',
-    },
-    {
-      name: 'Guest 2',
-    },
-  ],
-};
+import {AttendanceSelection, Group} from '../models/guest.model';
+import {GroupResponseDto, GroupService} from '../services/group.service';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-landing-page',
@@ -22,11 +12,7 @@ const testGroup: Group = {
   styleUrl: './landing-page.scss',
 })
 export class LandingPage {
-  protected group = signal<Group>(testGroup);
+  private readonly groupService = inject(GroupService);
 
-  protected get hasCompletedRsvp(): boolean {
-    return !this.group().members.some(
-      (member) => member.isAttending == undefined || member.selectedMealId == undefined,
-    );
-  }
+  protected group = toSignal(this.groupService.getCurrentUserGroup());
 }
