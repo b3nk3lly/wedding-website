@@ -8,18 +8,13 @@ import {
 } from '@angular/forms';
 import { MatButtonToggleGroup, MatButtonToggle } from '@angular/material/button-toggle';
 import { MatRadioButton, MatRadioGroup } from '@angular/material/radio';
-import {
-  MatError,
-  MatInput,
-  MatInputModule,
-  MatLabel,
-} from '@angular/material/input';
+import { MatError, MatInput, MatInputModule, MatLabel } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import {Group, Guest, AttendanceSelection} from '../models/guest.model';
-import {GroupResponseDto, GuestResponseDto} from '../services/group.service';
+import { Group, Guest, AttendanceSelection } from '../models/guest.model';
+import { GroupResponseDto, GuestResponseDto } from '../services/group.service';
 
 @Component({
   selector: 'app-rsvp-form',

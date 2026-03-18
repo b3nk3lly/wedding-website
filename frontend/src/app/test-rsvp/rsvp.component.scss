@@ -1,0 +1,606 @@
+@use "styles/tokens";
+
+// ─────────────────────────────────────────────
+//  Page shell
+// ─────────────────────────────────────────────
+.rsvp-page {
+  min-height: 100vh;
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(ellipse at 20% 10%, rgba(163, 142, 101, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 85%, rgba(111, 49, 72, 0.08) 0%, transparent 50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 3rem;
+  font-family: 'Cormorant Garamond', 'Garamond', Georgia, serif;
+  color: var(--ink);
+}
+
+// ─────────────────────────────────────────────
+//  Card
+// ─────────────────────────────────────────────
+.card-wrapper {
+  width: 100%;
+  max-width: 640px;
+  z-index: 1;
+}
+
+.rsvp-card {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--barley-corn);
+  border-radius: var(--radius-lg);
+  padding: 3rem 3.5rem;
+  box-shadow:
+    0 2px 8px var(--shadow),
+    0 16px 48px rgba(46, 31, 23, 0.07);
+  animation: cardRise 0.7s cubic-bezier(0.22, 0.68, 0, 1.2) both;
+
+  @media (max-width: 560px) {
+    padding: 2rem 1.5rem;
+  }
+}
+
+@keyframes cardRise {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─────────────────────────────────────────────
+//  Form header
+// ─────────────────────────────────────────────
+.form-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+  font-family: 'Lato', 'Helvetica Neue', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--flax-smoke);
+  margin: 0 0 0.5rem;
+}
+
+.form-title {
+  font-size: clamp(3rem, 8vw, 4.5rem);
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  margin: 0 0 1rem;
+  color: var(--nutmeg);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 auto 1rem;
+  width: 60%;
+}
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--barley-corn), transparent);
+}
+.divider-ornament {
+  color: var(--barley-corn);
+  font-size: 0.8rem;
+}
+
+.form-subtitle {
+  font-size: 1rem;
+  color: var(--flax-smoke);
+  margin: 0;
+  strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+}
+
+// ─────────────────────────────────────────────
+//  Fieldsets & legends
+// ─────────────────────────────────────────────
+.fieldset-attendance {
+  border: none;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+
+.legend {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+// ─────────────────────────────────────────────
+//  Attending radio cards
+// ─────────────────────────────────────────────
+.radio-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.radio-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.25rem 1rem;
+  border: 1.5px solid var(--barley-corn);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background var(--transition);
+  background: transparent;
+
+  input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .radio-icon {
+    font-size: 1.6rem;
+  }
+  .radio-label {
+    font-size: 0.9rem;
+    color: var(--flax-smoke);
+    text-align: center;
+    font-style: italic;
+    transition: color var(--transition);
+  }
+
+  &:hover {
+    border-color: var(--nutmeg);
+    background: var(--nutmeg-light);
+  }
+
+  &.active {
+    border-color: var(--nutmeg);
+    background: var(--nutmeg-light);
+    box-shadow: 0 0 0 3px rgba(119, 60, 38, 0.15);
+
+    .radio-label {
+      color: var(--nutmeg);
+      font-weight: 600;
+      font-style: normal;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────
+//  Section divider label
+// ─────────────────────────────────────────────
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--flax-smoke);
+  font-family: 'Lato', sans-serif;
+  margin-bottom: 1.25rem;
+}
+.section-label-line {
+  flex: 1;
+  height: 1px;
+  background: var(--barley-corn);
+  opacity: 0.5;
+}
+
+// ─────────────────────────────────────────────
+//  Guest blocks
+// ─────────────────────────────────────────────
+.guest-block {
+  border: 1px solid var(--parchment);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  background: rgba(253, 246, 238, 0.6);
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+
+  &:has(.guest-details) {
+    border-color: var(--barley-corn);
+    box-shadow: 0 2px 12px rgba(163, 142, 101, 0.2);
+  }
+}
+
+.guest-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.guest-attending-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+
+.guest-name {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.attending-badge {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Lato', sans-serif;
+  color: var(--finn);
+  border: 1px solid var(--finn);
+  border-radius: 20px;
+  padding: 0.15rem 0.65rem;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// ─────────────────────────────────────────────
+//  Custom checkbox
+// ─────────────────────────────────────────────
+.custom-checkbox {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 4px;
+  border: 1.5px solid var(--barley-corn);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  transition:
+    background var(--transition),
+    border-color var(--transition);
+  color: transparent;
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+input[type='checkbox'] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+input[type='checkbox']:checked + .custom-checkbox {
+  background: var(--nutmeg);
+  border-color: var(--nutmeg);
+  color: white;
+}
+
+// ─────────────────────────────────────────────
+//  Guest detail area
+// ─────────────────────────────────────────────
+.guest-details {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--barley-corn-light);
+  animation: slideDown 0.25s ease both;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ─────────────────────────────────────────────
+//  Meal cards
+// ─────────────────────────────────────────────
+.field-label {
+  display: block;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-family: 'Lato', sans-serif;
+  color: var(--flax-smoke);
+  margin-bottom: 0.65rem;
+  .required {
+    color: var(--prairie-sand);
+    margin-left: 0.15rem;
+  }
+}
+
+.meal-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.meal-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--barley-corn-light);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  background: white;
+  transition:
+    border-color var(--transition),
+    background var(--transition);
+
+  input[type='radio'] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .meal-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .meal-desc {
+    font-size: 0.85rem;
+    color: var(--nevada);
+    font-style: italic;
+  }
+
+  &:hover {
+    border-color: var(--barley-corn);
+  }
+
+  &.active {
+    border-color: var(--nutmeg);
+    background: var(--nutmeg-light);
+
+    .meal-title {
+      color: var(--nutmeg);
+    }
+  }
+}
+
+// ─────────────────────────────────────────────
+//  Allergy section
+// ─────────────────────────────────────────────
+.allergy-group {
+  .allergy-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: var(--ink);
+  }
+}
+
+.allergy-input-wrap {
+  margin-top: 0.75rem;
+  animation: slideDown 0.2s ease;
+}
+
+.allergy-input {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border: 1.5px solid var(--barley-corn-light);
+  border-radius: var(--radius-sm);
+  background: white;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  resize: vertical;
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition);
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: var(--nutmeg);
+    box-shadow: 0 0 0 3px rgba(119, 60, 38, 0.1);
+  }
+
+  &::placeholder {
+    color: var(--nevada);
+    font-style: italic;
+  }
+}
+
+// ─────────────────────────────────────────────
+//  Validation errors
+// ─────────────────────────────────────────────
+.field-error {
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--prairie-sand);
+  font-family: 'Lato', sans-serif;
+  animation: fadeIn 0.15s ease;
+}
+
+// ─────────────────────────────────────────────
+//  Submit button
+// ─────────────────────────────────────────────
+.form-footer {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .9rem;
+
+  svg {
+    width: 15px;
+    height: 15px;
+    transition: transform var(--transition);
+  }
+
+  &:hover svg {
+    transform: translateX(-3px);
+  }
+}
+
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.9rem 2.4rem;
+  background: var(--nutmeg);
+  color: var(--cream);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.08em;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+
+  .btn-arrow {
+    width: 18px;
+    height: 18px;
+    transition: transform var(--transition);
+  }
+
+  &:hover:not(:disabled) {
+    background: var(--prairie-sand);
+    box-shadow: 0 4px 20px rgba(158, 74, 31, 0.35);
+    transform: translateY(-1px);
+
+    .btn-arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.btn-ghost {
+  margin-top: 1.5rem;
+  background: none;
+  border: 1.5px solid var(--barley-corn);
+  color: var(--nutmeg);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1rem;
+  padding: 0.55rem 1.6rem;
+  border-radius: 40px;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition);
+
+  &:hover {
+    background: var(--nutmeg);
+    color: var(--cream);
+    border-color: var(--nutmeg);
+  }
+}
+
+// ─────────────────────────────────────────────
+//  Confirmation state
+// ─────────────────────────────────────────────
+.confirmation {
+  text-align: center;
+  padding: 1.5rem 0;
+  animation: cardRise 0.5s ease both;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.check-ring {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1.5rem;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .check-circle {
+    stroke-dasharray: 160;
+    stroke-dashoffset: 160;
+    animation: drawCircle 0.6s ease forwards;
+  }
+  .check-mark {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: drawCheck 0.4s 0.55s ease forwards;
+  }
+}
+
+@keyframes drawCircle {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes drawCheck {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.confirm-title {
+  font-size: 2.8rem;
+  font-weight: 300;
+  margin: 0 0 1rem;
+  letter-spacing: 0.08em;
+  color: var(--nutmeg);
+}
+
+.confirm-body {
+  font-size: 1.05rem;
+  color: var(--flax-smoke);
+  max-width: 380px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+// ─────────────────────────────────────────────
+//  Google Fonts import (add to index.html ideally)
+// ─────────────────────────────────────────────
+// @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Lato:wght@300;400;700&display=swap');

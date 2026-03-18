@@ -1,0 +1,25 @@
+:root {
+  // Surfaces
+  --cream:             #fdf6ee;
+  --parchment:         #f5ece0;
+
+  // Brand colours
+  --nutmeg:            rgba(119,  60,  38, 1);
+  --barley-corn:       rgba(163, 142, 101, 1);
+  --finn:              rgba(111,  49,  72, 1);
+  --flax-smoke:        rgba(129, 129, 100, 1);
+  --nevada:            rgba( 96, 107, 115, 1);
+  --prairie-sand:      rgba(158,  74,  31, 1);
+
+  // Tints
+  --nutmeg-light:      rgba(119,  60,  38, .10);
+  --barley-corn-light: rgba(163, 142, 101, .20);
+  --finn-light: rgba(111, 49, 72, 0.1);
+
+  --ink:               #2e1f17;
+  --shadow:            rgba(46, 31, 23, 0.10);
+  --radius-sm:   6px;
+  --radius-md:   12px;
+  --radius-lg:   20px;
+  --transition:  220ms ease;
+}

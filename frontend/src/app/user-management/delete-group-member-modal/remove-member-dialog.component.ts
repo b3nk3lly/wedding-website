@@ -1,6 +1,6 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {GroupResponseDto, GroupService, GuestResponseDto} from '../../services/group.service';
+import { GroupResponseDto, GroupService, GuestResponseDto } from '../../services/group.service';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import {
@@ -12,7 +12,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import {GuestService} from '../../services/guest.service';
+import { GuestService } from '../../services/guest.service';
 
 @Component({
   selector: 'edit-group-members-dialog',
@@ -34,7 +34,8 @@ import {GuestService} from '../../services/guest.service';
 })
 export class RemoveMemberDialogComponent implements OnInit {
   protected form: FormGroup;
-  protected readonly data: { group: GroupResponseDto, guest: GuestResponseDto } = inject(MAT_DIALOG_DATA);
+  protected readonly data: { group: GroupResponseDto; guest: GuestResponseDto } =
+    inject(MAT_DIALOG_DATA);
 
   private readonly guestService = inject(GuestService);
   private readonly dialogRef: MatDialogRef<RemoveMemberDialogComponent> = inject(MatDialogRef);
@@ -48,17 +49,15 @@ export class RemoveMemberDialogComponent implements OnInit {
   public ngOnInit() {
     if (this.data) {
       this.form.patchValue({
-        name: this.data.guest.name
-      })
+        name: this.data.guest.name,
+      });
     }
   }
 
   protected removeGuest() {
-    return this.guestService
-      .deleteOne(this.data.guest.id)
-      .subscribe((response) => {
-        console.log('Successfully deleted member');
-        this.dialogRef.close(response);
-      });
+    return this.guestService.deleteOne(this.data.guest.id).subscribe((response) => {
+      console.log('Successfully deleted member');
+      this.dialogRef.close(response);
+    });
   }
 }

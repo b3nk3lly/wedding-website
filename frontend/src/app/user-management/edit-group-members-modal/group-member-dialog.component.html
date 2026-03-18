@@ -1,8 +1,10 @@
-<h2 mat-dialog-title>@if (isInEditMode()) {
-  Edit {{ data.guest.name }}
-} @else {
-  Add Member to {{ data.group.name }}
-}</h2>
+<h2 mat-dialog-title>
+  @if (isInEditMode()) {
+    Edit {{ data.guest.name }}
+  } @else {
+    Add Member to {{ data.group.name }}
+  }
+</h2>
 <mat-dialog-content [formGroup]="form">
   <mat-form-field>
     <mat-label>Name</mat-label>

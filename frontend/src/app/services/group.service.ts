@@ -1,7 +1,7 @@
-import {inject, Injectable} from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {AttendanceSelection} from '../models/guest.model';
+import { AttendanceSelection } from '../models/guest.model';
 
 export interface GuestResponseDto {
   id: number;

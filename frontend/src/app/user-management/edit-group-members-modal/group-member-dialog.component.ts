@@ -1,6 +1,6 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import {GroupResponseDto, GroupService, GuestResponseDto} from '../../services/group.service';
+import { GroupResponseDto, GroupService, GuestResponseDto } from '../../services/group.service';
 import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
 import { MatButton } from '@angular/material/button';
 import {
@@ -12,7 +12,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import {GuestService} from '../../services/guest.service';
+import { GuestService } from '../../services/guest.service';
 
 @Component({
   selector: 'edit-group-members-dialog',
@@ -37,7 +37,8 @@ import {GuestService} from '../../services/guest.service';
 })
 export class GroupMemberDialogComponent implements OnInit {
   protected form: FormGroup;
-  protected readonly data: { group: GroupResponseDto, guest: GuestResponseDto } = inject(MAT_DIALOG_DATA);
+  protected readonly data: { group: GroupResponseDto; guest: GuestResponseDto } =
+    inject(MAT_DIALOG_DATA);
   protected readonly isInEditMode = signal(!!this.data.guest);
 
   private readonly guestService = inject(GuestService);
@@ -52,8 +53,8 @@ export class GroupMemberDialogComponent implements OnInit {
   public ngOnInit() {
     if (this.data) {
       this.form.patchValue({
-        name: this.data.guest.name
-      })
+        name: this.data.guest.name,
+      });
     }
   }
 
